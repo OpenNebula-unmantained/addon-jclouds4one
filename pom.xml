@@ -110,7 +110,7 @@
 							<sources>
 								<source>
 									<filter>true</filter>
-									<location>${basedir}/src/main/resources/config/vmm/jclouds_rc</location>
+									<location>${basedir}/src/main/resources/config/vmm/jcloudsrc</location>
 								</source>
 							</sources>
  						</mapping>
