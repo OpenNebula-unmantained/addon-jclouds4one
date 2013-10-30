@@ -1,0 +1,9 @@
+NAME="JClouds"
+CONTEXT=[
+    FILES=""
+]
+JCLOUDS=[
+    group="default",
+    hardwareId="t1.micro",
+    locationId="us-east-1d"
+]

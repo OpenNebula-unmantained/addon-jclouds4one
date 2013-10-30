@@ -100,16 +100,22 @@ class JCloudsDriver < VirtualMachineDriver
         # NOTE
         # In the version 3.8.3 of OpenNebula the parameters gathers from the xml template was a little different
         # For example:
-        # doc.elements["TEMPLATE/JCLOUDS/PARAMS"] instead of doc.elements["VM/USER_TEMPLATE/JCLOUDS/PARAMS"]  	
-    	# TODO: Costruct the parameters with an each
-    	params 
-        doc.elements.each("VM/USER_TEMPLATE/JCLOUDS/*") { |element| puts element.name }
-    	params = doc.elements["VM/USER_TEMPLATE/JCLOUDS/PARAMS"].text
-        group  = doc.elements["VM/USER_TEMPLATE/JCLOUDS/group"].text
+        # doc.elements["TEMPLATE/JCLOUDS"] instead of doc.elements["VM/USER_TEMPLATE/JCLOUDS"]  
+    	
+        params = ""
+        group  = ""
+            
+        doc.elements.each("VM/USER_TEMPLATE/JCLOUDS/*") do |element|
+            if element.name.downcase != "group"
+                params = "#{params} --#{element.name.downcase} #{element.text}"
+            else
+                group = element.text
+            end
+        end
   
         # Construct the command parameters
         auth_params       = "--provider #{@provider} --identity #{@identity} --credential #{@credential}"
-        additional_params = " \"#{params}\""
+        additional_params = "\"#{params}\""
             
         # Starts the VM
         rc, info = do_action(JCLOUDS_CLI_PATH + "/" + @cli + " node create" + " " + auth_params +
