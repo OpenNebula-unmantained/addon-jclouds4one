@@ -126,28 +126,6 @@
 								</source>
 							</sources>
  						</mapping>
- 						<mapping>
-							<configuration>true</configuration>
-							<directoryIncluded>true</directoryIncluded>
-							<directory>/etc/one/vmm_exec</directory>
-							<filemode>755</filemode>
-							<sources>
-								<source>
-									<location>${basedir}/src/main/resources/config/one/jclouds_vm_mad.conf</location>
-								</source>
-							</sources>
- 						</mapping>
- 						<mapping>
-							<configuration>true</configuration>
-							<directoryIncluded>true</directoryIncluded>
-							<directory>/etc/one/im_jclouds</directory>
-							<filemode>755</filemode>
-							<sources>
-								<source>
-									<location>${basedir}/src/main/resources/config/one/jclouds_im_mad.conf</location>
-								</source>
-							</sources>
- 						</mapping>	
 					</mappings>
 					<provides>
 						<provide>${project.artifactId}</provide>
