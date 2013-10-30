@@ -3,6 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>jclouds4one</artifactId>
+	<groupId>com.terradue</groupId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>rpm</packaging>
 
@@ -11,7 +12,7 @@
 		<redmine.projectID>jclouds4one</redmine.projectID>
 	</properties>
 	
-	<name>JClouds driver for Opennebula</name>
+	<name>JClouds driver for OpenNebula</name>
 
 	<build>
 		<filters>
@@ -25,11 +26,6 @@
 			</resource>
 		</resources>	
 		<plugins>
-			<plugin>
-				<groupId>org.nuiton.jredmine</groupId>
-				<artifactId>jredmine-maven-plugin</artifactId>
-				<inherited>false</inherited>
-			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>rpm-maven-plugin</artifactId>

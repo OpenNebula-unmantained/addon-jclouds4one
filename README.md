@@ -2,7 +2,7 @@
 
 ## Description
 
-Hybrid JClouds is a Driver for Opennebula that provides a way to use providers that can be accessed by the [JClouds](<http://jclouds.incubator.apache.org/>) library. It is made for Command Line Interfaces (CLIs) developed on top of the JClouds library (for example [jclouds-cli](<https://github.com/jclouds/jclouds-cli>)), but it is generic enough to be used with a generic CLI made on top of JClouds, configuring properly the parsing of CLI responses in the `jclouds_driver.rb`.
+Hybrid JClouds is a Driver for Opennebula that provides a way to use providers that can be accessed by the [JClouds](<http://jclouds.incubator.apache.org/>) library. It is made for Command Line Interfaces (CLIs) developed for the JClouds library (for example [jclouds-cli](<https://github.com/jclouds/jclouds-cli>)), but it is generic enough to be used with a generic CLI made on top of JClouds.
 
 ## Development
 
