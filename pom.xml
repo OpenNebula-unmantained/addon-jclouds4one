@@ -126,6 +126,17 @@
 								</source>
 							</sources>
  						</mapping>
+ 						<mapping>
+							<configuration>true</configuration>
+							<directoryIncluded>true</directoryIncluded>
+							<directory>/etc/one/jclouds-labs_setup</directory>
+							<filemode>755</filemode>
+							<sources>
+								<source>
+									<location>${basedir}/src/main/resources/config/scripts/setup</location>
+								</source>
+							</sources>
+ 						 </mapping>
 					</mappings>
 					<provides>
 						<provide>${project.artifactId}</provide>

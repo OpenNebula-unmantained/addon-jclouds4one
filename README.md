@@ -74,15 +74,15 @@ Configure the Opennebula installation, adding the Jclouds Information Manager, V
     	executable = "one_tm",
     	arguments  = "-t 15 -d dummy,lvm,shared,qcow2,ssh,vmfs,iscsi,ceph,jclouds" ]
     	
-Configure the provider parameters modifying properly the configuration file `/etc/one/im_jclouds/im_jclouds.conf` and the file `/etc/one/jclouds_rc`:
+Configure the provider parameters modifying properly the configuration file `/etc/one/im_jclouds/im_jclouds.conf` and the file `/etc/one/jcloudsrc`:
 
-	$ cat jclouds_rc
+	$ cat jcloudsrc
 	# User parameters
 	:identity: "identity"
 	:credential: "credential"
 
 	# Provider parameters
-	:endpoint: "url-endpoint-api"
+	:provider: "provider-name"
 	:cli: "jclouds"	
     	
 Restart the server via:
@@ -91,18 +91,20 @@ Restart the server via:
 
 ## Usage
 
+There is two ways to setup the OpenNebula Cloud Controller: by following the Step 1-4 or using the setup script at `/etc/one/jclouds-labs_setup/setup.sh` 
+
 ###Step 1 - Setup the Cluster
 
 Create a cluster on Opennebula, named for example 'jclouds', using either the Sunstone GUI or via the following command:
 
-	$ onecluster create jclouds
+	$ onecluster create JClouds
 
 ###Step 2 - Setup the Datastore
 
-Create a datastore on Opennebula, named for example 'jclouds-ds', using either Sunstone GUI or the following commands:
+Create a datastore on Opennebula, named for example 'JClouds', using either Sunstone GUI or the following commands:
 
 	$ cat ds.conf
-	NAME    = jclouds-ds
+	NAME    = JClouds
 	TM_MAD  = jclouds
 	TYPE    = SYSTEM_DS
 
@@ -111,26 +113,24 @@ Create a datastore on Opennebula, named for example 'jclouds-ds', using either S
 
 ###Step 3 - Setup the Host
 
-Create an host on Opennebula, named for example 'jclouds-provider', using either the Sunstone GUI or the following command:
+Create an host on Opennebula, named for example 'JClouds', using either the Sunstone GUI or the following command:
 
-	$ onehost create jclouds-provider --im im_jclouds --vm vmm_jclouds --net dummy
+	$ onehost create JClouds --im im_jclouds --vm vmm_jclouds --net dummy
 
 
 ###Step 4 - Prepare a Virtual Template
 
-Prepare a template suitable for the Jclouds Driver, named for example 'jclouds-vm', using either the Sunstone GUI or the following commands:
+Prepare a template suitable for the JClouds Driver, named for example 'JClouds', using either the Sunstone GUI or the following commands:
 
-	$ cat jclouds.txt
-	NAME="jclouds-vm"
-	CPU="1"
-	MEMORY="1024"
+	$ cat jclouds_template.txt
+	NAME="JClouds"
 	CONTEXT=[
-		FILES="file1 file2"
+		FILES=""
 	]
 	JCLOUDS=[
-		EXTERNAL_NETWORK="remote_external_network",
-		TEMPLATE="remote_template",
-		PRIVATE_NETWORK="remote_private_network"
+    	group="default",
+    	hardwareId="t1.micro",
+    	locationId="us-east-1d"
 	]
 	
  
