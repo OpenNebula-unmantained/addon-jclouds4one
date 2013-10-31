@@ -47,6 +47,7 @@ It is not tested with all the listed providers, so contributions in this way are
 ## Requirements
 
 * RHEL-based OS
+* A JClouds CLI, for example [jclouds-cli](<https://github.com/jclouds/jclouds-cli>)
 
 ## Installation
 
@@ -84,6 +85,13 @@ Configure the provider parameters modifying properly the configuration file `/et
 	# Provider parameters
 	:provider: "provider-name"
 	:cli: "jclouds"	
+	
+Configure the CLI path on the Cloud Controller modifying properly the configuration file `/etc/one/vmm_exec/vmm_execrc`
+
+	$ cat vmm_execrc
+	[..]
+	JCLOUDS_CLI_PATH=/path/to/drivers_cli/jclouds/bin
+	JCLOUDS_CONTEXT_PATH=/path/to/remote_context/jclouds/iso
     	
 Restart the server via:
 
@@ -91,11 +99,11 @@ Restart the server via:
 
 ## Usage
 
-There is two ways to setup the OpenNebula Cloud Controller: by following the Step 1-4 or using the setup script at `/etc/one/jclouds-labs_setup/setup.sh` 
+There is two ways to setup the OpenNebula Cloud Controller (as oneadmin user): by following the Step 1-4 or using the setup script `/etc/one/jclouds_setup/setup.sh`. 
 
 ###Step 1 - Setup the Cluster
 
-Create a cluster on Opennebula, named for example 'jclouds', using either the Sunstone GUI or via the following command:
+Create a cluster on Opennebula, named for example 'JClouds', using either the Sunstone GUI or via the following command:
 
 	$ onecluster create JClouds
 

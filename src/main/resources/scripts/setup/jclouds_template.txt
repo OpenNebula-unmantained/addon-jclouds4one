@@ -3,7 +3,7 @@ CONTEXT=[
     FILES=""
 ]
 JCLOUDS=[
-    group="default",
-    hardwareId="t1.micro",
-    locationId="us-east-1d"
+    GROUP="default",
+    HARDWAREID="t1.micro",
+    LOCATIONID="us-east-1d"
 ]

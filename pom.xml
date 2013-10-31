@@ -129,11 +129,11 @@
  						<mapping>
 							<configuration>true</configuration>
 							<directoryIncluded>true</directoryIncluded>
-							<directory>/etc/one/jclouds-labs_setup</directory>
+							<directory>/etc/one/jclouds_setup</directory>
 							<filemode>755</filemode>
 							<sources>
 								<source>
-									<location>${basedir}/src/main/resources/config/scripts/setup</location>
+									<location>${basedir}/src/main/resources/scripts/setup</location>
 								</source>
 							</sources>
  						 </mapping>
