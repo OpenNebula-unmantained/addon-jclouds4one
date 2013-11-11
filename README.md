@@ -17,7 +17,7 @@ More info:
 ## Authors
 
 * Leader: Cesare Rossi (cesare.rossi@terradue.com)
-* Other: Emmanuel Mathot (emmanuel.mathot@terradue.com)
+* Supervisor: Emmanuel Mathot (emmanuel.mathot@terradue.com)
 
 ## Compatibility
 
@@ -46,18 +46,31 @@ It is not tested with all the listed providers, so contributions in this way are
 
 ## Requirements
 
-* RHEL-based OS
 * A JClouds CLI, for example [jclouds-cli](<https://github.com/jclouds/jclouds-cli>)
 
-## Installation
+## Installation by RPM
 
 Install the package by:
 
 	$ rpm -Uvh jclouds4one.rpm
+	
+## Manual Installation
+
+To manually install the Driver, you have to download the repository as a ZIP and perform the following operations:
+
+	$ unzip jclouds4one-master.zip
+	$ cd addon-hybrid-jclouds-master 
+	$ cp src/main/ruby/im_mad /var/lib/one/remotes/vmm/jclouds
+	$ cp src/main/ruby/im_mad /usr/lib/one/mads
+	$ cp src/main/ruby/tm_mad /var/lib/one/remotes/tm/jclouds
+	$ cp src/main/resources/config/im /etc/one/im_jclouds
+	$ cp src/main/resources/config/vmm/jcloudsrc /etc/one/
+	$ cp src/main/resources/config/vmm/vmm_exec_jclouds.conf /etc/one/vmm_exec
+	$ cp src/main/resources/scripts/setup /etc/one/jclouds_setup
 
 ## Configuration
 
-Configure the Opennebula installation, adding the Jclouds Information Manager, Virtual Machine Manager and the Transfer Manager. It can be done adding to the file `/etc/one/oned.conf` the following lines:
+Configure the Opennebula installation, adding the JClouds Information Manager, Virtual Machine Manager and the Transfer Manager. It can be done adding to the file `/etc/one/oned.conf` the following lines:
 
 	IM_MAD = [
     	name       = "im_jclouds",
@@ -123,7 +136,7 @@ Create a datastore on Opennebula, named for example 'JClouds', using either Suns
 
 Create an host on Opennebula, named for example 'JClouds', using either the Sunstone GUI or the following command:
 
-	$ onehost create JClouds --im im_jclouds --vm vmm_jclouds --net dummy
+	$ onehost create amazon_ec2 --im im_jclouds --vm vmm_jclouds --net dummy
 
 
 ###Step 4 - Prepare a Virtual Template
@@ -136,9 +149,9 @@ Prepare a template suitable for the JClouds Driver, named for example 'JClouds',
 		FILES=""
 	]
 	JCLOUDS=[
-    	group="default",
-    	hardwareId="t1.micro",
-    	locationId="us-east-1d"
+    	GROUP="default",
+    	HARDWAREID="t1.micro",
+    	LOCATIONID="us-east-1d"
 	]
 	
  

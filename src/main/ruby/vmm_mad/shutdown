@@ -27,13 +27,6 @@ end
 $: << RUBY_LIB_LOCATION
 $: << File.dirname(__FILE__)
 
-#------------------------------------------------------------------------------
-# Wait the VM to shutdown TIMEOUT (xPOLL_INTERVAL) seconds.
-# Set to ~10min
-#------------------------------------------------------------------------------
-POLL_INTERVAL=2
-TIMEOUT=300
-
 require 'jclouds_driver'
 
 internal_name = ARGV[0]
@@ -42,16 +35,3 @@ host      = ARGV[1]
 jclouds_drv = JCloudsDriver.new(host)
 
 jclouds_drv.shutdown(internal_name)
-
-count=0
-
-regex = /STATE=(.*?)$/
-
-while (jclouds_drv.poll(internal_name).match(regex)[1] != 'd') do
-	sleep POLL_INTERVAL
-	if count > TIMEOUT then
-	    OpenNebula.log_debug("Timeout reached and VM #{internal_name} is still alive.")
-		exit -1
-	end
-	count+=POLL_INTERVAL	
-end

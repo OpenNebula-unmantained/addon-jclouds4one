@@ -43,7 +43,7 @@ class JCloudsDriver < VirtualMachineDriver
        DS_LOCATION  = ONE_LOCATION + "/datastores"
     end
 
-    CONF_FILE   = ETC_LOCATION + "/jclouds_rc"
+    CONF_FILE   = ETC_LOCATION + "/jcloudsrc"
 
     ENV['LANG'] = 'C'
 
@@ -104,14 +104,22 @@ class JCloudsDriver < VirtualMachineDriver
     	
         params = ""
         group  = ""
-            
+	
         doc.elements.each("VM/USER_TEMPLATE/JCLOUDS/*") do |element|
-            if element.name.downcase != "group"
-                params = "#{params} --#{element.name.downcase} #{element.text}"
+            case element.name.downcase
+            when "locationid"
+                params = "#{params} --locationId #{element.text}"
+            when "hardwareid"
+                params = "#{params} --hardwareId #{element.text}"
+            when "imageid"
+                params = "#{params} --imageId #{element.text}"
+            when "group"
+                group = element.text      
             else
-                group = element.text
+                params = "#{params} --#{element.name.downcase} #{element.text}"
             end
-        end
+        end        
+
   
         # Construct the command parameters
         auth_params       = "--provider #{@provider} --identity #{@identity} --credential #{@credential}"
@@ -125,15 +133,13 @@ class JCloudsDriver < VirtualMachineDriver
             exit info
         end
         
-        # Extract the 'id' (or internal_name) from JClouds response
+        # Extract the 'id' (or internal_name) from JClouds CLI response
         # The response is in the form:
         #
         # [id]                 [location] [hardware] [group] [status]
         # us-east-1/i-00452c66 us-east-1d t1.micro   default RUNNING
                 
-        internal_name = info.lines[1].split(" ")[0]             
-        
-        OpenNebula.log_debug("JClouds internal name #{internal_name}")
+        internal_name = info.to_a[2].split(" ")[0]             
         
         # Wait until the machine is in RUNNING state and the Public Address is present
         ip_regex = /\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b/
@@ -145,7 +151,10 @@ class JCloudsDriver < VirtualMachineDriver
             state_short = '-'
             ext_addr = '-'
             
-            info = poll(internal_name)            
+            info = poll(internal_name)
+
+            OpenNebula.log_debug("JClouds info:#{info}")
+            
             tmp = info.match(@one_poll_regex)
             
             if tmp
@@ -165,6 +174,78 @@ class JCloudsDriver < VirtualMachineDriver
         reference_id = internal_name + "@" + remote_vm_id
         
         return reference_id
+    end
+     
+    # ------------------------------------------------------------------------ #
+    # Monitor a VM                                                             #
+    # ------------------------------------------------------------------------ #
+    def poll(reference_id)
+        
+        auth_params = "--provider #{@provider} --identity #{@identity} --credential #{@credential}"
+        
+        tmp = reference_id.split("@")        
+        internal_name = tmp[0]
+           
+        # Start the monitoring
+        rc, info = do_action(JCLOUDS_CLI_PATH + "/" + @cli + " node info" + " " + auth_params + " " + internal_name)
+
+        return "STATE=#{VM_STATE[:deleted]}" if rc == false
+        
+        state = '-'
+        ext_addr = '-'
+        int_addr = '-'        
+
+        # Extract information from 'node info' response    
+        info.each do |x|
+            # -> Public IP
+            if tmp = x.match(@external_ip_regex)
+                ext_addr = tmp[1]
+                #continue
+            end
+            # -> Private IP
+            if tmp = x.match(@internal_ip_regex)
+                int_addr = tmp[1]
+            end 
+        end
+        
+        # -> State
+        state = info.to_a[1].split(" ")[4]
+                
+        case state
+            when "RUNNING"
+                state_short = VM_STATE[:active]
+            when "STOPPED"
+                state_short = 's'
+            when "TERMINATED"
+                state_short = 'd'
+            else
+               state_short = VM_STATE[:unknown]
+        end  
+
+        info = "STATE=#{state_short} EXT_IP=#{ext_addr} INT_IP=#{int_addr}"
+        
+        return info
+    end
+    
+    # ------------------------------------------------------------------------ #
+    # Shutdown a VM                                                            #
+    # ------------------------------------------------------------------------ #
+    def shutdown(reference_id)
+    
+        auth_params = "--provider #{@provider} --identity #{@identity} --credential #{@credential}"
+        
+        tmp = reference_id.split("@")        
+        internal_name = tmp[0]
+        remote_vm_id = tmp[1]
+        
+        remove_context(remote_vm_id)
+                
+        # Destroy the VM
+        rc, info = do_action(JCLOUDS_CLI_PATH + "/" + @cli + " node destroy" + " " + auth_params + " " + internal_name) 
+
+        exit info if rc == false
+                
+        OpenNebula.log_debug("Successfully removed JClouds instance #{internal_name}.")
     end
 
     # ------------------------------------------------------------------------ #
@@ -198,54 +279,6 @@ class JCloudsDriver < VirtualMachineDriver
         
         OpenNebula.log_debug("Action not implemented.")
     end
-    
-    # ------------------------------------------------------------------------ #
-    # Monitor a VM                                                             #
-    # ------------------------------------------------------------------------ #
-    def poll(reference_id)
-        
-        auth_params = "--provider #{@provider} --identity #{@identity} --credential #{@credential}"
-        
-        tmp = reference_id.split("@")        
-        internal_name = tmp[0]
-           
-        # Start the monitoring
-        rc, info = do_action(JCLOUDS_CLI_PATH + "/" + @cli + " node info" + " " + auth_params + " " + internal_name)
-
-        return "STATE=#{VM_STATE[:deleted]}" if rc == false
-        
-        state = '-'
-        ext_addr = '-'
-
-        # Extract informations from 'node info' response
-        
-        # -> State     
-        tmp = info.lines[1].split(" ")[4]
-        state = tmp[1] if tmp
-        
-        # -> Public IP
-        tmp = info.match(@external_ip_regex)
-        ext_addr = tmp[1] if tmp
-        
-        # -> Private IP
-        tmp = info.match(@internal_ip_regex)
-        int_addr = tmp[1] if tmp
-                                     
-        case state
-            when "RUNNING"
-                state_short = VM_STATE[:active]
-            when "STOPPED"
-                state_short = 's'
-            else
-                state_short = VM_STATE[:unknown]
-        end  
-                   
-        info = "STATE=#{state_short} EXT_IP=#{ext_addr} INT_IP=#{int_addr}"
-        
-        OpenNebula.log_debug("info: #{info}")
-        
-        return info
-    end
 
     # ------------------------------------------------------------------------ #
     # Restore a VM                                                             #
@@ -261,27 +294,6 @@ class JCloudsDriver < VirtualMachineDriver
     def save(reference_id)
         
         OpenNebula.log_debug("Action not implemented.")
-    end
-
-    # ------------------------------------------------------------------------ #
-    # Shutdown a VM                                                            #
-    # ------------------------------------------------------------------------ #
-    def shutdown(reference_id)
-    
-        auth_params = "--provider #{@provider} --identity #{@identity} --credential #{@credential}"
-        
-        tmp = reference_id.split("@")        
-        internal_name = tmp[0]
-        remote_vm_id = tmp[1]
-        
-        remove_context(remote_vm_id)
-                
-        # Destroy the VM
-        rc, info = do_action(JCLOUDS_CLI_PATH + "/" + @cli + " node destroy" + " " + auth_params + " " + provider_params + " --internalName " + internal_name) 
-
-        exit info if rc == false
-                
-        OpenNebula.log_debug("Successfully removed JClouds instance #{internal_name}.")
     end
 
     # ######################################################################## #

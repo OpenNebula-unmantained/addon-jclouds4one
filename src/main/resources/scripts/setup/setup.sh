@@ -1,5 +1,7 @@
 #!/bin/bash 
 
+# TODO: Add cluster requirements on jclouds-template
+
 cluster="JClouds"
 datastore="JClouds"
 host="JClouds"
