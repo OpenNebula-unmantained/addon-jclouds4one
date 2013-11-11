@@ -50,19 +50,25 @@ It is not tested with all the listed providers, so contributions in this way are
 
 ## Installation by RPM
 
-Install the package by:
+This project is developed with Maven and the RPM provided with the rpm-maven-plugin (read `pom.xml`). Once you have built the project, install the package by:
 
 	$ rpm -Uvh jclouds4one.rpm
 	
 ## Manual Installation
 
-To manually install the Driver, you have to download the repository as a ZIP and perform the following operations:
+To manually install the Driver, you have to download the repository as a ZIP:
 
 	$ unzip jclouds4one-master.zip
-	$ cd addon-hybrid-jclouds-master 
+	$ cd jclouds4one-master
+	
+Copy the main driver files in the cloud controller machine:
+
 	$ cp src/main/ruby/im_mad /var/lib/one/remotes/vmm/jclouds
 	$ cp src/main/ruby/im_mad /usr/lib/one/mads
 	$ cp src/main/ruby/tm_mad /var/lib/one/remotes/tm/jclouds
+
+Copy the configuration driver files in the cloud controller machine:
+
 	$ cp src/main/resources/config/im /etc/one/im_jclouds
 	$ cp src/main/resources/config/vmm/jcloudsrc /etc/one/
 	$ cp src/main/resources/config/vmm/vmm_exec_jclouds.conf /etc/one/vmm_exec
@@ -136,7 +142,7 @@ Create a datastore on Opennebula, named for example 'JClouds', using either Suns
 
 Create an host on Opennebula, named for example 'JClouds', using either the Sunstone GUI or the following command:
 
-	$ onehost create amazon_ec2 --im im_jclouds --vm vmm_jclouds --net dummy
+	$ onehost create amazon-ec2 --im im_jclouds --vm vmm_jclouds --net dummy
 
 
 ###Step 4 - Prepare a Virtual Template
