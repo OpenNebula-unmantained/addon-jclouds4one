@@ -3,6 +3,7 @@
 ## Description
 
 Hybrid JClouds is a Driver for Opennebula that provides a way to use providers that can be accessed by the [JClouds](<http://jclouds.incubator.apache.org/>) library. It is made for Command Line Interfaces (CLIs) developed for the JClouds library (for example [jclouds-cli](<https://github.com/jclouds/jclouds-cli>)), but it is generic enough to be used with a generic CLI made on top of JClouds.
+This project is co-funded by the [European Space Agency (ESA)](<http://www.esa.int/ESA>) 
 
 ## Development
 
@@ -16,8 +17,8 @@ More info:
 
 ## Authors
 
-* Leader: Cesare Rossi (cesare.rossi@terradue.com)
-* Supervisor: Emmanuel Mathot (emmanuel.mathot@terradue.com)
+* Leader: Cesare Rossi (cesare.rossi[at]terradue.com)
+* Supervisor: Emmanuel Mathot (emmanuel.mathot[at]terradue.com)
 
 ## Compatibility
 
