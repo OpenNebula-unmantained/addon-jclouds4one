@@ -1,13 +1,13 @@
-# Hybrid jclouds
+# jclouds4one
 
 ## Description
 
-Hybrid JClouds is a Driver for Opennebula that provides a way to use providers that can be accessed by the [JClouds](<http://jclouds.incubator.apache.org/>) library. It is made for Command Line Interfaces (CLIs) developed for the JClouds library (for example [jclouds-cli](<https://github.com/jclouds/jclouds-cli>)), but it is generic enough to be used with a generic CLI made on top of JClouds.
-This project is co-funded by the [European Space Agency (ESA)](<http://www.esa.int/ESA>) 
+The jclouds4one driver is an OpenNebula add-on that provides a way to access cloud providers implementing the [Apache Jclouds¨ library](<http://jclouds.incubator.apache.org/>). 
+This work has been co-funded by the [European Space Agency (ESA)](<http://www.esa.int/ESA>). 
 
 ## Development
 
-To contribute bug patches or new features, you can use the github Pull Request model. It is assumed that code and documentation are contributed under the Apache License 2.0. 
+To contribute bug patches or new features for jclouds4one, you can use the github Pull Request model. It is assumed that code and documentation are contributed under the Apache License 2.0. 
 
 More info:
 * [How to Contribute](http://opennebula.org/software:add-ons#how_to_contribute_to_an_existing_add-on)
@@ -26,7 +26,7 @@ This add-on is compatible with OpenNebula 4.2.
 
 ## Features
 
-Implements Hybrid Cloud, to support Cloud Bursting, with the ability to work with a variety of Cloud provider, such as:
+Implements hybrid Cloud computing, to support Cloud bursting, with the ability to work with a variety of Cloud provider, such as:
 
 * Amazon AWS
 * Azure Management
@@ -39,6 +39,8 @@ Implements Hybrid Cloud, to support Cloud Bursting, with the ability to work wit
 * Ninefold
 * OpenStack
 
+The Apache Jclouds¨ API open source library is to date providing support for 30 cloud providers & cloud software stacks.
+The jclouds4one development is porting the Apache Jclouds¨ API as a driver for OpenNebula. 
 The updated and complete list can be found here: http://jclouds.incubator.apache.org/documentation/userguide/
 
 ## Limitations
@@ -47,7 +49,7 @@ It is not tested with all the listed providers, so contributions in this way are
 
 ## Requirements
 
-* A JClouds CLI, for example [jclouds-cli](<https://github.com/jclouds/jclouds-cli>)
+A JClouds Command Line Interface (CLI). The driver is made for CLIs developed for the JClouds library (for example [jclouds-cli](<https://github.com/jclouds/jclouds-cli>)), but it is generic enough to be used with a generic CLI made on top of JClouds.
 
 ## Installation by RPM
 
