@@ -2,7 +2,7 @@
 
 ## Description
 
-The jclouds4one driver is an OpenNebula add-on that provides a way to access cloud providers implementing the [Apache Jclouds® library](<http://jclouds.incubator.apache.org/>). 
+The jclouds4one driver is an OpenNebula add-on that provides a way to access cloud providers implementing the [Apache jclouds® library](<http://jclouds.apache.org/>). 
 This work has been co-funded by the [European Space Agency (ESA)](<http://www.esa.int/ESA>). 
 
 ## Development
@@ -38,10 +38,11 @@ Implements hybrid Cloud computing, to support Cloud bursting, with the ability t
 * HP Cloud Services
 * Ninefold
 * OpenStack
+* Rackspace
 
-The Apache Jclouds® API open source library is to date providing support for 30 cloud providers & cloud software stacks.
-The jclouds4one development is porting the Apache Jclouds® API as a driver for OpenNebula. 
-The updated and complete list can be found here: http://jclouds.incubator.apache.org/documentation/userguide/
+The Apache jclouds® API open source library is to date providing support for 30 cloud providers & cloud software stacks.
+The jclouds4one development is porting the Apache jclouds® API as a driver for OpenNebula. 
+The updated and complete list can be found here: http://jclouds.apache.org/documentation/userguide/
 
 ## Limitations
 
@@ -49,7 +50,7 @@ It is not tested with all the listed providers, so contributions in this way are
 
 ## Requirements
 
-A JClouds Command Line Interface (CLI). The driver is made for CLIs developed for the JClouds library (for example [jclouds-cli](<https://github.com/jclouds/jclouds-cli>)), but it is generic enough to be used with a generic CLI made on top of JClouds.
+A jclouds Command Line Interface (CLI). The driver is made for CLIs developed for the jclouds library (for example [jclouds-cli](<https://github.com/jclouds/jclouds-cli>)), but it is generic enough to be used with a generic CLI made on top of JClouds.
 
 ## Installation by RPM
 
@@ -79,7 +80,7 @@ Copy the configuration driver files in the cloud controller machine:
 
 ## Configuration
 
-Configure the Opennebula installation, adding the JClouds Information Manager, Virtual Machine Manager and the Transfer Manager. It can be done adding to the file `/etc/one/oned.conf` the following lines:
+Configure the Opennebula installation, adding the jclouds Information Manager, Virtual Machine Manager and the Transfer Manager. It can be done adding to the file `/etc/one/oned.conf` the following lines:
 
 	IM_MAD = [
     	name       = "im_jclouds",
@@ -125,16 +126,16 @@ There is two ways to setup the OpenNebula Cloud Controller (as oneadmin user): b
 
 ###Step 1 - Setup the Cluster
 
-Create a cluster on Opennebula, named for example 'JClouds', using either the Sunstone GUI or via the following command:
+Create a cluster on Opennebula, named for example 'jclouds', using either the Sunstone GUI or via the following command:
 
-	$ onecluster create JClouds
+	$ onecluster create jclouds
 
 ###Step 2 - Setup the Datastore
 
-Create a datastore on Opennebula, named for example 'JClouds', using either Sunstone GUI or the following commands:
+Create a datastore on Opennebula, named for example 'jclouds', using either Sunstone GUI or the following commands:
 
 	$ cat ds.conf
-	NAME    = JClouds
+	NAME    = jclouds
 	TM_MAD  = jclouds
 	TYPE    = SYSTEM_DS
 
@@ -143,17 +144,17 @@ Create a datastore on Opennebula, named for example 'JClouds', using either Suns
 
 ###Step 3 - Setup the Host
 
-Create an host on Opennebula, named for example 'JClouds', using either the Sunstone GUI or the following command:
+Create an host on Opennebula, named for example 'jclouds', using either the Sunstone GUI or the following command:
 
 	$ onehost create amazon-ec2 --im im_jclouds --vm vmm_jclouds --net dummy
 
 
 ###Step 4 - Prepare a Virtual Template
 
-Prepare a template suitable for the JClouds Driver, named for example 'JClouds', using either the Sunstone GUI or the following commands:
+Prepare a template suitable for the jclouds Driver, named for example 'jclouds', using either the Sunstone GUI or the following commands:
 
 	$ cat jclouds_template.txt
-	NAME="JClouds"
+	NAME="jclouds"
 	CONTEXT=[
 		FILES=""
 	]
@@ -177,6 +178,6 @@ Start the VM either via the Sunstone GUI or via the following command:
 
 ## References
 
-* JClouds: http://jclouds.incubator.apache.org/
+* jclouds: http://jclouds.apache.org/
 
 
