@@ -122,7 +122,7 @@ Restart the server via:
 
 ## Usage
 
-There is two ways to setup the OpenNebula Cloud Controller (as oneadmin user): by following the Step 1-4 or using the setup script `/etc/one/jclouds_setup/setup.sh`. 
+There are two ways to setup the OpenNebula Cloud Controller (as oneadmin user): by following the Step 1-4 or using the setup script `/etc/one/jclouds_setup/setup.sh`. 
 
 ###Step 1 - Setup the Cluster
 
