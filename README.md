@@ -46,7 +46,9 @@ The updated and complete list can be found here: http://jclouds.apache.org/docum
 
 ## Limitations
 
-It is not tested with all the listed providers, so contributions in this way are appreciated.
+* It is not tested with all the listed providers, so contributions in this way are appreciated.
+
+* The functionalities for snapshotting, restoring, or migration are not available with the jclouds4one driver.
 
 ## Requirements
 
