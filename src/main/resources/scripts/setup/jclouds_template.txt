@@ -1,6 +1,6 @@
 NAME="JClouds"
 CONTEXT=[
-    FILES=""
+    FILES="file1 file2"
 ]
 JCLOUDS=[
     GROUP="default",
