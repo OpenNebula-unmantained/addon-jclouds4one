@@ -158,7 +158,7 @@ Prepare a template suitable for the jclouds Driver, named for example 'jclouds',
 	$ cat jclouds_template.txt
 	NAME="jclouds"
 	CONTEXT=[
-		FILES=""
+		FILES="file1 file2"
 	]
 	JCLOUDS=[
     	GROUP="default",
