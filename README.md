@@ -148,7 +148,7 @@ Create a datastore on Opennebula, named for example 'jclouds', using either Suns
 
 Create an host on Opennebula, named for example 'jclouds', using either the Sunstone GUI or the following command:
 
-	$ onehost create amazon-ec2 --im im_jclouds --vm vmm_jclouds --net dummy
+	$ onehost create amazon-ec2 --im im_jclouds --vm vmm_jclouds --net dummy --cluster jclouds
 
 
 ###Step 4 - Prepare a Virtual Template
